@@ -1,5 +1,9 @@
 # Event Stream demo
 
+
+https://user-images.githubusercontent.com/58401630/221682512-bed74976-4d0d-4534-8a21-38a4b8964875.mov
+
+
 Event Stream is a unidirectional protocol, meaning:
 
 - data is sent from the server to the client only
