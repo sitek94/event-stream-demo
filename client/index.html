@@ -1,0 +1,63 @@
+<h1>Event Stream Demo</h1>
+
+<button id="start">Start streaming data from the server</button>
+<button disabled id="stop">Stop streaming</button>
+<button id="clear">Clear</button>
+
+<ul id="messages"></ul>
+
+<script>
+  const startButton = document.getElementById('start')
+  const stopButton = document.getElementById('stop')
+  const clearButton = document.getElementById('clear')
+  const messages = document.getElementById('messages')
+
+  init()
+
+  function init() {
+    let eventSource
+
+    startButton.addEventListener('click', () => {
+      eventSource = new EventSource('/events')
+
+      eventSource.onmessage = appendMessage
+      eventSource.onerror = showError
+
+      startStreaming()
+    })
+
+    stopButton.addEventListener('click', () => {
+      eventSource.close()
+      stopStreaming()
+    })
+
+    clearButton.addEventListener('click', () => {
+      clearMessages()
+    })
+  }
+
+  function appendMessage(event) {
+    const li = document.createElement('li')
+    li.textContent = event.data
+    messages.appendChild(li)
+  }
+
+  function clearMessages() {
+    messages.innerHTML = ''
+  }
+
+  function showError(error) {
+    alert(`🚨 ${error.message}`)
+    console.error(error)
+  }
+
+  function startStreaming() {
+    startButton.disabled = true
+    stopButton.disabled = false
+  }
+
+  function stopStreaming() {
+    startButton.disabled = false
+    stopButton.disabled = true
+  }
+</script>
